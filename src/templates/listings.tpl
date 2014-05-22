@@ -13,7 +13,9 @@
                 <li>browse or search by name any city metro you're looking for</li>
                 <li>click on any metro logo below to add it to the list</li>
                 <li>click on any logo on the list (here) to remove it</li>
-                <li>generate a badge with such logos by clicking... the 'generate badge' button (avobe this lines)</li>
+                <li>generate a badge with such logos by clicking...
+                     the 'generate badge' button (above this lines)</li>
+            </ol>
         </div>
     </div>
 </div>
