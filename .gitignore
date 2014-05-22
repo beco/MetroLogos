@@ -7,4 +7,4 @@ Vagrantfile
 src/templates_c
 
 ## Generated files
-src/images/
+src/images/*gif
