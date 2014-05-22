@@ -1,0 +1,32 @@
+#result {
+    min-height: 80px;
+    max-height: 200px;
+    border: thin solid #ccc;
+    border-radius: 10px;
+    overflow: auto;
+}
+
+#logos {
+    width: 100%;
+    margin-top:290px;
+}
+
+#logos img {
+    border: thin solid #ffffff;
+    border-radius: 5px;
+}
+
+#logos img:hover {
+    border: thin solid blue;
+    border-radius: 5px;
+    box-shadow: 5px 5px 3px #888888;
+}
+
+#header {
+    position: fixed;
+    top: 0px;
+    padding: 20px;
+    width: 95%;
+    background: #fff;
+    margin-top: 0px;
+}
