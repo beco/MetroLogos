@@ -1,0 +1,10 @@
+## Mr. Developer
+.vagrant
+bootstrap.sh
+Vagrantfile
+
+## Smarty directory
+src/templates_c
+
+## Generated files
+src/images/
