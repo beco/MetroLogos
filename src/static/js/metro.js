@@ -1,7 +1,6 @@
 var metros = {};
 var total = 380;
 var disp  = total;
-console.log("Metros", metros);
 
 function search(term) {
     var logos = document.getElementsByName('logo');
