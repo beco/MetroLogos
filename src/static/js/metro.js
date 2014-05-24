@@ -1,6 +1,6 @@
 var metros = {};
 var total = 380;
-var disp  = total;
+
 
 // forEach method
 // http://toddmotto.com/ditch-the-array-foreach-call-nodelist-hack/
@@ -12,16 +12,14 @@ var forEach = function (array, callback, scope) {
 
 function search(term) {
     var logos = document.getElementsByName('logo');
-    for(var i = 0; i < logos.length; i++) {
-        var logo = logos[i];
+
+    forEach(logos, function (index, logo) {
         if(logo.title.toLowerCase().indexOf(term.toLowerCase()) > -1) {
             logo.style.display = 'inline';
-            disp++;
         } else {
             logo.style.display = 'none';
-            disp--;
         }
-    }
+    });
 //    document.getElementById("count").innerHTML = disp + "/" + total + " [ " + metros.length + " selected] ";
 }
 
