@@ -2,6 +2,14 @@ var metros = {};
 var total = 380;
 var disp  = total;
 
+// forEach method
+// http://toddmotto.com/ditch-the-array-foreach-call-nodelist-hack/
+var forEach = function (array, callback, scope) {
+  for (var i = 0; i < array.length; i++) {
+    callback.call(scope, i, array[i]); // passes back stuff we need
+  }
+};
+
 function search(term) {
     var logos = document.getElementsByName('logo');
     for(var i = 0; i < logos.length; i++) {
@@ -21,17 +29,17 @@ function setTitle(text) {
     document.getElementById('title').innerHTML = text;
 }
 
-function getId(uri){
-    uri = uri.substring(uri.lastIndexOf("/")+1);
-    uri = uri.substring(0, uri.length - 4);
+function getIcon(uri){
+    uri = uri.substring(uri.lastIndexOf("/")+1).slice(0, -4);
     return uri;
 }
 
 function add(logo) {
     document.getElementById('instructions').style.display = 'none';
-    var id = getId(logo.src);
+
+    var id = logo.title.replace(/\s/g, '');
     if (!metros.hasOwnProperty(id)){
-        metros[id] = logo.src;
+        metros[id] = getIcon(logo.src);
         var img = document.createElement("img");
         img.src = logo.src;
         img.title = logo.title;
@@ -51,7 +59,13 @@ function add(logo) {
 }
 
 function generate() {
-    window.location.href =  "index.php?logos=" + Object.keys(metros).join(",");
+    var values = "";
+    forEach(Object.keys(metros), function (index, value) {
+        values += metros[value] + ",";
+    });
+    if (values !== "") {
+       window.location.href = "?logos=" + values.slice(0, -1);
+    }
 }
 
 function clearAll() {
