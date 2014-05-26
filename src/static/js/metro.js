@@ -1,21 +1,25 @@
-var metros = [];
+var metros = {};
 var total = 380;
-var disp  = total;
 
 
+// forEach method
+// http://toddmotto.com/ditch-the-array-foreach-call-nodelist-hack/
+var forEach = function (array, callback, scope) {
+  for (var i = 0; i < array.length; i++) {
+    callback.call(scope, i, array[i]); // passes back stuff we need
+  }
+};
 
 function search(term) {
     var logos = document.getElementsByName('logo');
-    for(var i = 0; i < logos.length; i++) {
-        logo = logos[i];
+
+    forEach(logos, function (index, logo) {
         if(logo.title.toLowerCase().indexOf(term.toLowerCase()) > -1) {
             logo.style.display = 'inline';
-            disp++;
         } else {
             logo.style.display = 'none';
-            disp--;
         }
-    }
+    });
 //    document.getElementById("count").innerHTML = disp + "/" + total + " [ " + metros.length + " selected] ";
 }
 
@@ -23,37 +27,46 @@ function setTitle(text) {
     document.getElementById('title').innerHTML = text;
 }
 
+function getIcon(uri){
+    uri = uri.substring(uri.lastIndexOf("/")+1).slice(0, -4);
+    return uri;
+}
+
 function add(logo) {
-    metros.push(logo.src);
     document.getElementById('instructions').style.display = 'none';
-    var img = document.createElement("img");
-    img.src = logo.src;
-    img.title = logo.title;
-    img.onclick = function() {
-        this.style.display = "none";
-        metros.splice(metros.indexOf(this.src, 1));
+
+    var id = logo.title.replace(/\s/g, '');
+    if (!metros.hasOwnProperty(id)){
+        metros[id] = getIcon(logo.src);
+        var img = document.createElement("img");
+        img.src = logo.src;
+        img.title = logo.title;
+        img.id = id;
+        img.onclick = function() {
+            this.style.display = "none";
+            delete metros[this.id];
+        };
+        img.onmouseover = function() {
+            setTitle(this.title);
+        };
+        img.onmouseout = function() {
+            setTitle('');
+        };
+        document.getElementById('result').appendChild(img);
     }
-    img.onmouseover = function() {
-        setTitle(this.title);
-    }
-    img.onmouseout = function() {
-        setTitle('');
-    }
-    document.getElementById('result').appendChild(img);
 }
 
 function generate() {
-    var logos = [];
-    for(var i = 0; i < metros.length; i++) {
-        var logo = metros[i];
-        logo = logo.substring(logo.lastIndexOf("/")+1);
-        logo = logo.substring(0, logo.length - 4);
-        logos.push(logo);
+    var values = "";
+    forEach(Object.keys(metros), function (index, value) {
+        values += metros[value] + ",";
+    });
+    if (values !== "") {
+       window.location.href = "?logos=" + values.slice(0, -1);
     }
-    window.location.href =  "index.php?logos=" + logos.join(",");
 }
 
 function clearAll() {
     document.getElementById('result').innerHTML = '';
-    metros = [];
+    metros = {};
 }
